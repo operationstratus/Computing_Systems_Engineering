@@ -1,3 +1,5 @@
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
 '''
 # Mux16
 for i in range(16):
@@ -33,3 +35,65 @@ bits = 16
 for i in range(bits):
     print(f"Bit(in=in[{i}], load=load, out=out[{i}]);")
 '''
+
+'''
+#Dmux8Way16:
+bits = 2
+ways = 8
+inName = "in"
+outName = "DmuxOut"
+selName = "address"
+code = ""
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+for i in range(bits):
+    code += f"DMux8Way(in={inName}[{i}], sel={selName}, "
+    for j in range(2):
+        var = alphabet[j].upper()
+        code += f"{alphabet[j]}=DMuxOut{var}{i}" + (not j==ways-1)*", "
+    code += ");\n"
+
+print(code)
+'''
+
+
+#RAM8
+bits = 16
+ways = 8
+code = ""
+
+code += "//DMux8Way för att skicka 'load'-signalen till det Register som ska vara mottaglig för ny data" + "\n"
+code += "DMux8Way(in=load, sel=address, "
+for j in range(ways):
+    code += f"{alphabet[j]}=load{j}" + (not j == ways-1)*", "
+code += ");" + "\n\n"
+
+code += "//8x Register som får 'load'-signal från DMuxen\n"
+for j in range(ways):
+    code += f"Register(in=in, load=load{j}, out=out{j});" + "\n"
+
+
+code += "\n" + "//Mux8Way16 för att adressen ska kunna välja utsignalen från rätt Register" + "\n" + "Mux8Way16("
+for j in range(ways):
+    code += f"{alphabet[j]}=out{j}, "
+code += "sel=address, out=out);"
+print(code)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
