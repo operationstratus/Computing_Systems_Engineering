@@ -19,9 +19,17 @@ for i in range(16):
     print(f"Mux(a=Muxab{i}, b=Muxdc{i}, sel=sel[0], out=out[{i}]);\n")
 '''
 
-
+'''
 # Add16
 bits = 16
 print("FullAdder(a=a[0], b=b[0], c=false, sum=out[0], carry=carry0);")
 for i in range(1, bits):
     print(f"FullAdder(a=a[{i}], b=b[{i}], c=carry{i-1}, sum=out[{i}], carry=carry{i});")
+'''
+
+'''
+#16BitRegister
+bits = 16
+for i in range(bits):
+    print(f"Bit(in=in[{i}], load=load, out=out[{i}]);")
+'''
